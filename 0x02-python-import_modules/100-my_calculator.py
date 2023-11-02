@@ -3,7 +3,7 @@
 if __name__ == "__main__":
     """Build my own calculator!"""
     import sys
-    from cal import mul, sub, add, div
+    from calculator_1 import mul, sub, add, div
 
     if len(sys.argv) != 4:
         print("Usage: ./100-my_calculator.py <a> <operator> <b>")
