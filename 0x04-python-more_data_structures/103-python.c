@@ -1,85 +1,74 @@
 #include "/usr/include/python3.4/Python.h"
 #include <stdio.h>
-
 /**
- * print_hex_bytes - Print hexadecimal representation of bytes.
- * @bytes: Pointer to the bytes.
- * @length: Length of the bytes.
- *
- * Return: No return value.
- */
-void print_hex_bytes(const char *bytes, int length)
+*print_hexn - print hexadecimal representation of bytes.
+*@str: pointer
+*@n : int
+*Return: No return value.
+*/
+void print_hexn(const char *str, int n)
 {
-    int i = 0;
+	int x = 0;
 
-    for (; i < lenght - 1; ++i)
-		printf("%02x ", (unsigned char) bytes[i]);
+	for (; x < n - 1; ++x)
+		printf("%02x ", (unsigned char) str[x]);
 
-	printf("%02x", bytes[i]);
+	printf("%02x", str[x]);
 }
-
 /**
- * print_python_bytes - Print information about Python bytes objects.
- * @p: Python bytes object.
- *
- * Return: No return value.
- */
+*print_python_bytes - Print information about bytes objects in Python.
+*
+*@p: Python bytes object.
+*Return: No return value.
+*/
 void print_python_bytes(PyObject *p)
 {
-    PyBytesObject *byte_obj = (PyBytesObject *)p;
-    int size = 0;
-    int count_bytes = 0;
+	PyBytesObject *clone = (PyBytesObject *) p;
+	int count_bytes, clone_size = 0;
 
-    printf("[.] bytes object info\n");
+	printf("[.] bytes object info\n");
+	if (PyBytes_Check(clone))
+	{
+		clone_size = PyBytes_Size(p);
+		count_bytes = clone_size + 1;
 
-    if (PyBytes_Check(byte_obj))
-    {
-        size = PyBytes_Size(p);
-        count_bytes = size + 1;
+		if (count_bytes >= 10)
+			count_bytes = 10;
 
-        if (count_bytes >= 10)
-        {
-            count_bytes = 10;
-        }
-
-        printf("  size: %d\n", size);
-        printf("  trying string: %s\n", byte_obj->ob_sval);
-        printf("  first %d bytes: ", count_bytes);
-        print_hex_bytes(byte_obj->ob_sval, count_bytes);
-        printf("\n");
-    }
-    else
-    {
-        printf("  [ERROR] Invalid Bytes Object\n");
-    }
+		printf("  size: %d\n", clone_size);
+		printf("  trying string: %s\n", clone->ob_sval);
+		printf("  first %d bytes: ", count_bytes);
+		print_hexn(clone->ob_sval, count_bytes);
+		printf("\n");
+	}
+	else
+	{
+		printf("  [ERROR] Invalid Bytes Object\n");
+	}
 }
-
 /**
- * print_python_list - Print information about Python lists.
- * @p: Python list object.
- *
- * Return: No return value.
- */
+*print_python_list - Print information about Python lists.
+*@p: Python list object.
+*
+*Return: No return value.
+*/
 void print_python_list(PyObject *p)
 {
-int i = 0, length = 0;
-PyObject *item;
-PyListObject *list_obj = (PyListObject *)p;
+	int i = 0, lent = 0;
+	PyObject *item;
+	PyListObject *clone = (PyListObject *) p;
 
-printf("[*] Python list info\n");
-length = PyList_GET_SIZE(p);
-printf("[*] Size of the Python List = %d\n";
-printf("[*] Allocated = %d\n", (int)list_obj->allocated);
+	printf("[*] Python list info\n");
+	lent = PyList_GET_SIZE(p);
+	printf("[*] Size of the Python List = %d\n", lent);
+	printf("[*] Allocated = %d\n", (int) clone->allocated);
 
-for (; i < length; ++i)
-{
-item = PyList_GET_ITEM(p, i);
-printf("Element %d: %s\n", i, item->ob_type->tp_name);
+	for (; i < lent; ++i)
+	{
+		item = PyList_GET_ITEM(p, i);
+		printf("Element %d: %s\n", i, item->ob_type->tp_name);
 
-if (PyBytes_Check(item))
-  
-   print_python_bytes_info(item);
-        
-  }
+		if (PyBytes_Check(item))
+			print_python_bytes(item);
+	}
 }
-
