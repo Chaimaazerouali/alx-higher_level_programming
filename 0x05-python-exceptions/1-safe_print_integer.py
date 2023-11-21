@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import sys
 def safe_print_integer(value):
     """Print an integer with "{:d}".format().
 
@@ -9,10 +10,10 @@ def safe_print_integer(value):
     if value has been correctly printed - True
     Otherwise - False.
     """
-    rst = False
+    rt = True
     try:
         print("{:d}".format(value))
-        rst = True
-    except:
-        rst = False
-    return (rst)
+    except Exception as e:
+        print("Exception:", e, file=sys.stderr)
+        rt = False
+    return rt
