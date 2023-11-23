@@ -4,12 +4,12 @@
 #include <floatobject.h>
 
 /**
- * print_python_float - Prints information about a Python float object.
- * @p:  Address of the float object PyObject struct.
+ * print_python_float - prints info about python float
+ * @p: address of pyobject struct
  */
 void print_python_float(PyObject *p)
 {
-    double dl;
+    double d;
 
 	setbuf(stdout, NULL);
 	printf("[.] float object info\n");
@@ -18,19 +18,19 @@ void print_python_float(PyObject *p)
 		printf("  [ERROR] Invalid Float Object\n");
 		return;
 	}
-    dl = ((PyFloatObject *)p)->ob_fval;
+    d = ((PyFloatObject *)p)->ob_fval;
 	printf("  value: %s\n",
         PyOS_double_to_string(d, 'r', 0, Py_DTSF_ADD_DOT_0, NULL));
 }
 
 /**
- * print_python_bytes - Prints information about a Python bytes object.
- * @p: Address of the bytes object PyObject struct.
+ * print_python_bytes - prints info about python bytes
+ * @p: address of pyobject struct
  */
 void print_python_bytes(PyObject *p)
 {
-	size_t i, lenh, s;
-	char *strg;
+	size_t i, len, size;
+	char *str;
 
 	setbuf(stdout, NULL);
 	printf("[.] bytes object info\n");
@@ -39,19 +39,19 @@ void print_python_bytes(PyObject *p)
 		printf("  [ERROR] Invalid Bytes Object\n");
 		return;
 	}
-	s = ((PyVarObject *)p)->ob_s;
-	strg = ((PyBytesObject *)p)->ob_sval;
-	lenh =  s + 1 > 10 ? 10 : s + 1;
-	printf("  size: %lu\n", s);
-	printf("  trying string: %s\n", strg);
-	printf("  first %lu bytes: ", lenh);
-	for (i = 0; i < lenh; i++)
-		printf("%02hhx%s", strg[i], i + 1 < lenh ? " " : "");
+	size = ((PyVarObject *)p)->ob_size;
+	str = ((PyBytesObject *)p)->ob_sval;
+	len =  size + 1 > 10 ? 10 : size + 1;
+	printf("  size: %lu\n", size);
+	printf("  trying string: %s\n", str);
+	printf("  first %lu bytes: ", len);
+	for (i = 0; i < len; i++)
+		printf("%02hhx%s", str[i], i + 1 < len ? " " : "");
 	printf("\n");
 }
 
 /**
- * print_python_list - prints information about python lists
+ * print_python_list - prints info about python lists
  * @p: address of pyobject struct
  */
 void print_python_list(PyObject *p)
