@@ -1,11 +1,12 @@
 #!/usr/bin/python3
-""" 
-Function that reads a text file (UTF-8) and prints its content to stdout.
+"""
+    function that reads a text file (UTF8)
+    and prints it to stdout:
 
-Prototype: def read_file(filename=""):
-Uses the with statement to ensure proper file handling.
-Does not manage file permissions or handle file existence exceptions.
-
+    Prototype: def read_file(filename=""):
+    You must use the with statement
+    You don’t need to manage file permission or
+    file doesn't exist exceptions.
 """
 
 
