@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """ module contains class Base """
 
-
-import json import dumps, load
+from json import dumps, load
 import csv
 import turtle
 
