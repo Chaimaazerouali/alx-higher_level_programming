@@ -1,26 +1,17 @@
 #!/usr/bin/python3
 """ list states from db hbtn_0e_0_usa """
+import MySQLdb
+import sys
 
-
-def run_command(args):
-    """ print rows in states table start with N"""
-    db = Db.connect(host="localhost",
-                    port=3306,
-                    user=args[0],
-                    passwd=args[1],
-                    db=args[2])
-    c = db.cursor()
-    c.execute("SELECT * FROM states\
-        WHERE name\
-        LIKE BINARY 'N%'\
-        ORDER BY id ASC")
-    rows = c.fetchall()
-    for row in rows:
-        print(row)
-    c.close()
-    db.close()
 
 if __name__ == "__main__":
-    import MySQLdb as Db
-    import sys
-    run_command(sys.argv[1:])
+    db = MySQLdb.connect(host="localhost", user=sys.argv[1],
+                         passwd=sys.argv[2], db=sys.argv[3], port=3306)
+    cur = db.cursor()
+    cur.execute("""SELECT * FROM states WHERE name
+                LIKE BINARY 'N%' ORDER BY states.id""")
+    rows = cur.fetchall()
+    for row in rows:
+        print(row)
+    cur.close()
+    db.close()
